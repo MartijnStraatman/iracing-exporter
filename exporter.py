@@ -16,13 +16,11 @@ class IracingMetricsCollector(object):
     def __init__(self):
         pass
     def collect(self):
-        gauge = GaugeMetricFamily("random_number", "A random number generator, I have no better idea", labels=["randomNum"])
-        gauge.add_metric(['random_num'], random.randint(1, 20))
+        gauge = GaugeMetricFamily("fuel_level", "percentage of fuel available", labels=["fuelPercentage"])
+        gauge.add_metric(['fuel_level'], random.randint(1, 20))
         yield gauge
-        count = CounterMetricFamily("random_number_2", "A random number 2.0", labels=['randomNum'])
-        global totalRandomNumber
-        totalRandomNumber += random.randint(1,30)
-        count.add_metric(['random_num'], totalRandomNumber)
+        count = CounterMetricFamily("laps_driven", "number of laps driven", labels=['lapsDriven'])
+        count.add_metric(['laps_driven'], 1)
         yield count
 
 # our main loop, where we retrieve data
@@ -64,8 +62,6 @@ def loop():
     # so do like this:
     # if ir['WeekendInfo']:
     #   print(ir['WeekendInfo']['TeamRacing'])
-  
-
 
 if __name__ == "__main__":
     ir = irsdk.IRSDK()
