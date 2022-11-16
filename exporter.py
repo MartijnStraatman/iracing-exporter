@@ -3,7 +3,7 @@ import time
 import random 
 from os import path
 import yaml
-from prometheus_client.core import GaugeMetricFamily, REGISTRY, CounterMetricFamily
+from prometheus_client.core import GaugeMetricFamily, REGISTRY, CounterMetricFamily, InfoMetricFamily
 from prometheus_client import start_http_server
 totalRandomNumber = 0
 
@@ -120,7 +120,7 @@ class State:
     last_car_setup_tick = -1
 
 class IracingMetricsCollector(object):
-    
+
     def __init__(self):
         self.ir = irsdk.IRSDK()
         self.state = State()
@@ -200,9 +200,19 @@ class IracingMetricsCollector(object):
             gauge = GaugeMetricFamily("fuel_level", "percentage of fuel available", labels=["fuel"])
             gauge.add_metric(['fuel_level'], metrics['FuelLevel'])
             yield gauge
+            gauge = GaugeMetricFamily("time_remaining", "time remaining in the current sessions", labels=["time"])
+            gauge.add_metric(['time_remaining'], metrics['SessionTimeRemain'])
+            yield gauge
+            gauge = GaugeMetricFamily("last_laptime", "last lap time", labels=["time"])
+            gauge.add_metric(['last_laptime'], metrics['LapLastLapTime'])
+            yield gauge
+            gauge = GaugeMetricFamily("race_laps", "Laps completed in race", labels=["laps"])
+            gauge.add_metric(['race_laps'], metrics['RaceLaps'])
+            yield gauge            
             count = CounterMetricFamily("laps_completed", "number of laps completed", labels=['laps'])
             count.add_metric(['laps_completed'], metrics['LapCompleted'])
             yield count
+
 
 if __name__ == "__main__":
     # ir = irsdk.IRSDK()
