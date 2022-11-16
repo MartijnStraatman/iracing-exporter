@@ -120,10 +120,7 @@ class State:
     last_car_setup_tick = -1
 
 class IracingMetricsCollector(object):
-
-    items = {}
-
-
+    
     def __init__(self):
         self.ir = irsdk.IRSDK()
         self.state = State()
@@ -155,7 +152,7 @@ class IracingMetricsCollector(object):
         self.ir.freeze_var_buffer_latest()
 
         for key, value in metrics_dict:
-            value = ir['key']
+            value = self.ir['key']
             metrics_dict.update({key, value})
         
         return metrics_dict
