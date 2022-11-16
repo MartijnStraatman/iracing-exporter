@@ -151,9 +151,9 @@ class IracingMetricsCollector(object):
         # and you will get incosistent data
         self.ir.freeze_var_buffer_latest()
 
-        for key, value in metrics_dict:
-            value = self.ir['key']
-            metrics_dict.update({key, value})
+        for key, value in metrics_dict.items():
+            value = self.ir[key]
+            metrics_dict.update({key: value})
         
         return metrics_dict
 
@@ -196,6 +196,7 @@ class IracingMetricsCollector(object):
         self.check_iracing()
         if self.state.ir_connected:
             metrics = self.get_metrics(metrics_dict)
+            print(metrics)
 
             gauge = GaugeMetricFamily("fuel_level", "percentage of fuel available", labels=["fuel"])
             gauge.add_metric(['fuel_level'], metrics['FuelLevel'])
