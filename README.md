@@ -20,3 +20,7 @@ Plan:
 The Grafana agent will start scraping the exporter and will send it to a prometheus instance which is configured in the agent config.
 For example to grafana.net
 
+
+## Grafana dashboard example
+
+![image](https://user-images.githubusercontent.com/17493104/202204778-5a95a6f2-60fc-4fc1-9ad2-8fec0f0affa0.png)
