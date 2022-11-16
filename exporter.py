@@ -151,15 +151,14 @@ class IracingMetricsCollector(object):
         # and you will get incosistent data
         self.ir.freeze_var_buffer_latest()
 
+        print(self.ir['SessionInfo'])
+
         for key, value in metrics_dict.items():
             value = self.ir[key]
+
             metrics_dict.update({key: value})
         
         return metrics_dict
-
-        
-
-
 
 
         # # retrieve live telemetry data
