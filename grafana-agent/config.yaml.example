@@ -1,0 +1,17 @@
+server:
+  log_level: warn
+metrics:
+  wal_directory: D:\temp\grafana-agent-wal
+  global:
+    scrape_interval: 10s
+    remote_write:
+    - url:  https://prometheus-us-central1.grafana.net/api/prom/push
+      basic_auth:
+        username: 
+        password:
+  configs:
+    - name: iracing-metrics
+      scrape_configs:
+      - job_name: iracing-metrics
+        static_configs:
+        - targets: [localhost:9001]
