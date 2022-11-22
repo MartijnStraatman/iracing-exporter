@@ -119,6 +119,17 @@ class State:
     ir_connected = False
     last_car_setup_tick = -1
 
+# hold driver data for the current session
+class Driver():
+    def __init__(self, driver_name, incident_count) -> None:
+        self.driver_name = driver_name
+        self.incident_count = incident_count
+
+class Track():
+    def __init__(self, name) -> None:
+        self.name = name    
+    
+
 class IracingMetricsCollector(object):
 
     def __init__(self):
@@ -197,21 +208,25 @@ class IracingMetricsCollector(object):
             metrics = self.get_metrics(metrics_dict)
             print(metrics)
 
-            gauge = GaugeMetricFamily("fuel_level", "percentage of fuel available", labels=["fuel"])
-            gauge.add_metric(['fuel_level'], metrics['FuelLevel'])
+            # gauge = GaugeMetricFamily("fuel_level", "percentage of fuel available", labels=[self.ir['Lap']])
+            # gauge.add_metric(['fuel_level'], metrics['FuelLevel']).add
+            # yield gauge
+            # gauge = GaugeMetricFamily("time_remaining", "time remaining in the current sessions", labels=["time"])
+            # gauge.add_metric(['time_remaining'], metrics['SessionTimeRemain'])
+            # yield gauge
+            # gauge = GaugeMetricFamily("last_laptime", "last lap time", labels=["time"])
+            # gauge.add_metric(['last_laptime'], metrics['LapLastLapTime'])
+            # yield gauge
+            # gauge = GaugeMetricFamily("race_laps", "Laps completed in race", labels=["laps"])
+            # gauge.add_metric(['race_laps'], metrics['RaceLaps'])
+            # yield gauge            
+            # count = CounterMetricFamily("laps_completed", "number of laps completed", labels=['laps'])
+            # count.add_metric(['laps_completed'], metrics['LapCompleted'])
+            # yield count
+
+            gauge = GaugeMetricFamily("fuel_level", "percentage of fuel available", labels='lap')
+            gauge.add_metric([self.ir['lap']], metrics['FuelLevel'])
             yield gauge
-            gauge = GaugeMetricFamily("time_remaining", "time remaining in the current sessions", labels=["time"])
-            gauge.add_metric(['time_remaining'], metrics['SessionTimeRemain'])
-            yield gauge
-            gauge = GaugeMetricFamily("last_laptime", "last lap time", labels=["time"])
-            gauge.add_metric(['last_laptime'], metrics['LapLastLapTime'])
-            yield gauge
-            gauge = GaugeMetricFamily("race_laps", "Laps completed in race", labels=["laps"])
-            gauge.add_metric(['race_laps'], metrics['RaceLaps'])
-            yield gauge            
-            count = CounterMetricFamily("laps_completed", "number of laps completed", labels=['laps'])
-            count.add_metric(['laps_completed'], metrics['LapCompleted'])
-            yield count
 
 
 if __name__ == "__main__":
